@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 
-export const PostLoading = () => {
+export const Loading = () => {
   return (
     <div className="max-w-3xl mx-auto">
       <Button href="/" className="mb-8" aria-label="Go back to blog">
