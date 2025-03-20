@@ -1,12 +1,3 @@
-export const getAllPosts = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-    next: { tags: ["posts"] },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch posts");
-  return res.json();
-};
-
 export const getPostById = async (id) => {
   try {
     const res = await fetch(

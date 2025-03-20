@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { formatDate } from "@/lib/utils";
+import UserTag from "./UserTag";
 
 export default function PostDetail({ post }) {
   return (
@@ -16,7 +17,7 @@ export default function PostDetail({ post }) {
       <div className="flex items-center mb-6 text-gray-500 text-sm">
         <span>Published {formatDate(new Date())}</span>
         <span className="mx-2">•</span>
-        <span>User {post.userId}</span>
+        <UserTag userId={post.userId} />
       </div>
 
       <div className="prose max-w-none text-gray-600">

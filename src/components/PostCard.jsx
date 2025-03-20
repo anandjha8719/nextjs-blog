@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import Button from "./Button";
-import Image from "next/image";
+import UserTag from "./UserTag";
+import { truncateText } from "@/lib/utils";
 
 export default function PostCard({ post }) {
-  const truncatedBody = post.body.split("\n")[0].slice(0, 100) + "...";
+  const truncatedBody = truncateText(post.body, 100);
 
   return (
     <article className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 mb-6">
@@ -15,17 +16,7 @@ export default function PostCard({ post }) {
 
       <p className="text-gray-600 mb-4">{truncatedBody}</p>
       <div className="flex justify-between">
-        <div className="flex items-center mb-0 text-gray-500 text-sm align-center gap-1">
-          <Image
-            src={"/user-avatar.png"}
-            width={20}
-            height={20}
-            alt="user-avatar"
-          />
-          <span className="flex items-center justify-center h-full pt-1">
-            User{post.userId}
-          </span>
-        </div>
+        <UserTag userId={post.userId} />
 
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }}>
           <Button href={`/posts/${post.id}`}>Read More</Button>

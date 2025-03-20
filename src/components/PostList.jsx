@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useCallback } from "react";
 import { useSearch } from "@/context/SearchContext";
 import PostCard from "@/components/PostCard";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useCallback } from "react";
 
 export default function PostList() {
   const { filteredPosts, searchQuery, loadMorePosts, hasMore, isLoading } =
@@ -12,11 +12,11 @@ export default function PostList() {
 
   const lastPostRef = useCallback(
     (node) => {
-      if (isLoading) return;
+      if (isLoading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting) {
           loadMorePosts();
         }
       });
@@ -40,18 +40,18 @@ export default function PostList() {
         </motion.div>
       ) : (
         <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {filteredPosts.map((post, index) => (
-              <div
+              <motion.div
                 key={post.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.3 }}
                 ref={index === filteredPosts.length - 1 ? lastPostRef : null}
               >
                 <PostCard post={post} />
-              </div>
+              </motion.div>
             ))}
           </AnimatePresence>
 
