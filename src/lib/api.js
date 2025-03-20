@@ -26,3 +26,9 @@ export const getPaginatedPosts = async (page = 1, limit = 10) => {
   if (!res.ok) throw new Error("Failed to fetch posts");
   return res.json();
 };
+
+export const getLocalPost = (id) => {
+  if (typeof window === "undefined") return null;
+  const localPosts = JSON.parse(localStorage.getItem("localPosts") || "[]");
+  return localPosts.find((post) => post.id === id) || null;
+};

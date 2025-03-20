@@ -19,7 +19,11 @@ export default function PostCard({ post }) {
         <UserTag userId={post.userId} />
 
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }}>
-          <Button href={`/posts/${post.id}`}>Read More</Button>
+          <Button
+            href={`/posts/${post.id}${post.isLocal ? "?local=true" : ""}`}
+          >
+            Read More
+          </Button>
         </motion.div>
       </div>
     </article>
