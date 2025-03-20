@@ -20,7 +20,7 @@ export default function SearchBar() {
   }, []);
 
   return (
-    <div className="relative mb-8 max-w-2xl mx-auto">
+    <div className="relative mb-12 mt-12 max-w-2xl mx-auto">
       <input
         type="text"
         value={searchQuery}

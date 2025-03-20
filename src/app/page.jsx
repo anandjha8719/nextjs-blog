@@ -2,6 +2,7 @@ import SearchBar from "@/components/SearchBar";
 import { SearchProvider } from "@/context/SearchContext";
 import { getPaginatedPosts } from "@/lib/api";
 import PostListWrapper from "@/components/PostListWrapper";
+import NewPostForm from "@/components/NewPostForm";
 
 const Home = async () => {
   const initialPosts = await getPaginatedPosts(1, 10);
@@ -12,6 +13,7 @@ const Home = async () => {
         Latest Blog Posts
       </h1>
       <SearchProvider initialPosts={initialPosts}>
+        <NewPostForm /> 
         <SearchBar />
         <PostListWrapper />
       </SearchProvider>

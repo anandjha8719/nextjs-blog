@@ -12,22 +12,38 @@ export const SearchProvider = ({ children, initialPosts = [] }) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [localPosts, setLocalPosts] = useState([]);
 
   useEffect(() => {
-    setFilteredPosts(initialPosts);
-  }, [initialPosts]);
+    const saved = localStorage.getItem("localPosts");
+    setLocalPosts(saved ? JSON.parse(saved) : []);
+  }, []);
+
+  const addLocalPost = (post) => {
+    const updatedPosts = [post, ...localPosts];
+    setLocalPosts(updatedPosts);
+    localStorage.setItem("localPosts", JSON.stringify(updatedPosts));
+  };
+
+  useEffect(() => {
+    setFilteredPosts([...localPosts, ...initialPosts]);
+  }, [initialPosts, localPosts]);
 
   const updateSearchResults = async (query) => {
     setIsSearching(true);
+    const combinedPosts = [
+      ...localPosts.map((p) => ({ ...p, isLocal: true })),
+      ...posts,
+    ];
 
     if (!query.trim()) {
-      setFilteredPosts(posts);
+      setFilteredPosts(combinedPosts);
       setIsSearching(false);
       return;
     }
 
     const lowercaseQuery = query.toLowerCase();
-    const results = posts.filter((post) =>
+    const results = combinedPosts.filter((post) =>
       post.title.toLowerCase().includes(lowercaseQuery)
     );
 
@@ -66,7 +82,9 @@ export const SearchProvider = ({ children, initialPosts = [] }) => {
       value={{
         searchQuery,
         setSearchQuery,
-        filteredPosts,
+        addLocalPost,
+        filteredPosts, // Update this line
+        localPosts,
         updateSearchResults,
         isSearching,
         loadMorePosts,

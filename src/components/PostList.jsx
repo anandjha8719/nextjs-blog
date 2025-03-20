@@ -28,6 +28,7 @@ export default function PostList() {
 
   return (
     <>
+      <h2 className="text-3xl font-semibold mb-3 text-gray-800 pl-2 mb-12">All posts</h2>
       {searchQuery && filteredPosts.length === 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
